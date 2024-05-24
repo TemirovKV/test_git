@@ -17,4 +17,4 @@ jobs:
     steps:
       - name: echo
         run:
-          echo ${{ env.APP_PORT_${{ github.branch }} }}
+          echo ${{ env.'APP_PORT_${{ github.branch }}' }}
