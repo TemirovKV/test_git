@@ -1,0 +1,19 @@
+name: deploy
+on:
+  push:
+    branches: [ master, preprod ]
+
+env:
+  CONTAINER_NAME: containerName-${{ github.branch }}
+  APP_PORT_master: 3000
+  APP_PORT_preprod: 3001
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      -run:
+        echo ${{ env.APP_PORT_${{ github.branch }} }}
