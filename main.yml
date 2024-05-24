@@ -1,0 +1,32 @@
+name: deploy
+on:
+  push:
+    branches: [ main ]
+
+env:
+  APP_DIR: ${{ secrets.PREPROD_DIR }}
+  HOST: ${{ secrets.PREPROD_HOST }}
+  USER: ${{ secrets.PREPROD_USER }}
+  PORT: ${{ secrets.PREPROD_PORT }}
+  PASSWORD: ${{ secrets.PREPROD_PASSWORD }}
+  PULL_SCRIPT: ${{ secrets.PULL_SCRIPT }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.HOST }}
+          port: ${{ env.PORT }}
+          username: ${{ env.USER }}
+          password: ${{ env.PASSWORD }}
+          script: |
+            echo 'Pull changes'
+            cd ${{ env.APP_DIR }}
+            git checkout . && git clean -fd
+            ${{ env.PULL_SCRIPT }}
