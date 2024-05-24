@@ -15,5 +15,6 @@ jobs:
       contents: read
       packages: write
     steps:
-      run:
-        echo ${{ env.APP_PORT_${{ github.branch }} }}
+      - name: echo
+        run:
+          echo ${{ env.APP_PORT_${{ github.branch }} }}
